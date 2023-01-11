@@ -1,5 +1,4 @@
 `include "defines.v"
-`include "Decoder.v"
 
 module Commander(
     input clk,
