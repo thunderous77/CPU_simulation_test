@@ -78,6 +78,8 @@ module LS (
     wire [`DATA_TYPE] real_V1 = (valid_sign_from_rs_ex && Q1_from_cmd == rob_id_from_rs_ex) ? data_from_rs_ex : ((valid_sign_from_ls_ex && Q1_from_cmd == rob_id_from_ls_ex) ? data_from_ls_ex : V1_from_cmd);
     wire [`DATA_TYPE] real_V2 = (valid_sign_from_rs_ex && Q2_from_cmd == rob_id_from_rs_ex) ? data_from_rs_ex : ((valid_sign_from_ls_ex && Q2_from_cmd == rob_id_from_ls_ex) ? data_from_ls_ex : V2_from_cmd);
 
+    integer i;
+
     assign full_sign_to_fch = (ls_element_cnt >= `LS_SIZE - 5);
 
     assign io_rob_id_to_rob = (head_addr == `RAM_IO_ADDR) ? rob_id[head] : `INVALID_ROB;
@@ -128,7 +130,7 @@ module LS (
             head <= `ZERO_LS;
             tail <= `ZERO_LS;
             store_tail <= `INVALID_LS;
-            for (integer i = 0; i < `LS_SIZE; i = i + 1) begin
+            for (i = 0; i < `LS_SIZE; i = i + 1) begin
                 busy[i] <= `FALSE;
                 commit[i] <= `FALSE;
                 opnum[i] <= `OPNUM_NULL;
@@ -146,7 +148,7 @@ module LS (
         else if (rollback_sign_from_rob) begin
             tail <= (store_tail == `LS_SIZE - 1) ? 0 : store_tail + 1;
             ls_element_cnt <= ((store_tail > head) ? store_tail - head + 1 : `LS_SIZE - head + store_tail + 1);
-            for (integer i = 0; i < `LS_SIZE; i = i + 1) begin
+            for (i = 0; i < `LS_SIZE; i = i + 1) begin
                 if (~commit[i] || opnum[i] <= `OPNUM_LHU) busy[i] <= `FALSE;
             end
         end
@@ -185,7 +187,7 @@ module LS (
 
             // update commit sign
             if (commit_sign_from_rob) begin
-                for (integer i = 0; i < `LS_SIZE; i = i + 1) begin
+                for (i = 0; i < `LS_SIZE; i = i + 1) begin
                     if (busy[i] && rob_id[i] == commit_rob_id_from_rob && !commit[i]) begin
                         commit[i] <= `TRUE;
                         if (opnum[i] >= `OPNUM_SB) store_tail <= i;
@@ -195,7 +197,7 @@ module LS (
             
             // update data
             if (valid_sign_from_rs_ex) begin
-                for (integer i = 0; i < `LS_SIZE; i = i + 1) begin
+                for (i = 0; i < `LS_SIZE; i = i + 1) begin
                     if (Q1[i] == rob_id_from_rs_ex) begin
                         V1[i] <= data_from_rs_ex;
                         Q1[i] <= `INVALID_ROB;
@@ -207,7 +209,7 @@ module LS (
                 end
             end 
             if (valid_sign_from_ls_ex) begin
-                for (integer i = 0; i < `LS_SIZE; i = i + 1) begin
+                for (i = 0; i < `LS_SIZE; i = i + 1) begin
                     if (Q1[i] == rob_id_from_ls_ex) begin
                         V1[i] <= data_from_ls_ex;
                         Q1[i] <= `INVALID_ROB;

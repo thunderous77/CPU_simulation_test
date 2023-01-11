@@ -59,6 +59,8 @@ module Fetcher(
     IDLE = 0, FETCH = 1;
     reg status;
 
+    integer i;
+
     //debug
     // integer outfile;
     // initial begin
@@ -72,7 +74,7 @@ module Fetcher(
             pc <= `NULL;
             pc <= `NULL;
             // icache initialize
-            for (integer i = 0; i < `ICACHE_SIZE; i = i + 1) begin
+            for (i = 0; i < `ICACHE_SIZE; i = i + 1) begin
                 valid[i] <= `FALSE;
                 tag_store[i] <= `NULL;
                 inst_block_in_cache[i] <= `NULL;

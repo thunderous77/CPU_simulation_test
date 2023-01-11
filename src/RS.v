@@ -70,9 +70,11 @@ module RS (
                     ((busy[8] && Q1[8] == `INVALID_ROB && Q2[8] == `INVALID_ROB) ? 8 : ((busy[9] && Q1[9] == `INVALID_ROB && Q2[9] == `INVALID_ROB) ? 9 : ((busy[10] && Q1[10] == `INVALID_ROB && Q2[10] == `INVALID_ROB) ? 10 : ((busy[11] && Q1[11] == `INVALID_ROB && Q2[11] == `INVALID_ROB) ? 11 :
                     ((busy[12] && Q1[12] == `INVALID_ROB && Q2[12] == `INVALID_ROB) ? 12 : ((busy[13] && Q1[13] == `INVALID_ROB && Q2[13] == `INVALID_ROB) ? 13 : ((busy[14] && Q1[14] == `INVALID_ROB && Q2[14] == `INVALID_ROB) ? 14 : ((busy[15] && Q1[15] == `INVALID_ROB && Q2[15] == `INVALID_ROB) ? 15 : `INVALID_RS)))))))))))))));
     
+    integer i;
+
     always @(posedge clk) begin
         if (rst || rollback_sign_from_rob) begin
-            for (integer i = 0; i < `RS_SIZE; i = i + 1) begin
+            for (i = 0; i < `RS_SIZE; i = i + 1) begin
                 busy[i] <= `FALSE;
                 pc[i] <= `NULL;
                 opnum[i] <= `OPNUM_NULL;
@@ -102,7 +104,7 @@ module RS (
             end
 
             if (valid_sign_from_rs_ex) begin
-                for (integer i = 0; i < `RS_SIZE; i = i + 1) begin
+                for (i = 0; i < `RS_SIZE; i = i + 1) begin
                     if (Q1[i] == rob_id_from_rs_ex) begin
                         V1[i] <= data_from_rs_ex;
                         Q1[i] <= `INVALID_ROB;
@@ -115,7 +117,7 @@ module RS (
             end
 
             if (valid_sign_from_ls_ex) begin
-                for (integer i = 0; i < `RS_SIZE; i = i + 1) begin
+                for (i = 0; i < `RS_SIZE; i = i + 1) begin
                     if (Q1[i] == rob_id_from_ls_ex) begin
                         V1[i] <= data_from_ls_ex;
                         Q1[i] <= `INVALID_ROB;

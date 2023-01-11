@@ -36,10 +36,12 @@ module Predictor (
     wire [`ADDR_TYPE] br_pc = {{20{predict_inst_from_fch[31]}}, predict_inst_from_fch[7:7], predict_inst_from_fch[30:25], predict_inst_from_fch[11:8], 1'b0};
     assign predicted_jump_target_pc_to_fch = (predict_inst_from_fch[`OPCODE_RANGE] == `OPCODE_JAL ? jal_pc : br_pc);
 
+    integer i;
+    
     // update
     always @(posedge clk) begin
         if (rst) begin
-            for (integer i = 0; i< `PREDICTOR_SIZE; i = i + 1) begin
+            for (i = 0; i< `PREDICTOR_SIZE; i = i + 1) begin
                 branch_history[i] <= `WEAK_NOT_JUMP;
             end
         end

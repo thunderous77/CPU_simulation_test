@@ -41,6 +41,8 @@ module Register (
     assign V1_to_cmd = (shadow_rd_from_rob == rs1_from_cmd && rs1_from_cmd != `ZERO_REG) ? shadow_V_from_rob : V[rs1_from_cmd];
     assign V2_to_cmd = (shadow_rd_from_rob == rs2_from_cmd && rs2_from_cmd != `ZERO_REG) ? shadow_V_from_rob : V[rs2_from_cmd];
 
+    integer i;
+
     // debug
     // integer outfile;
     // initial begin
@@ -70,14 +72,14 @@ module Register (
 
     always @(posedge clk) begin
         if (rst) begin
-            for (integer i = 0; i < `REG_SIZE; i = i + 1) begin
+            for (i = 0; i < `REG_SIZE; i = i + 1) begin
                 Q[i] <= `INVALID_ROB;
                 V[i] <= `NULL;
             end
         end
         else begin
             if (shadow_rollback_sign_from_rob) begin
-                for (integer i = 0; i < `REG_SIZE; i = i + 1) Q[i] <= `INVALID_ROB;
+                for (i = 0; i < `REG_SIZE; i = i + 1) Q[i] <= `INVALID_ROB;
             end
             // reorder
             else if (shadow_rd_from_cmd != `ZERO_REG) begin

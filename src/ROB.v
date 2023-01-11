@@ -88,12 +88,14 @@ module ROB(
     // test predictor
     integer jump_cnt = 0, wrong_predict_cnt = 0;
 
+    integer i;
+
     always @(posedge clk) begin
         if (rst || rollback_sign) begin
             rob_element_cnt = `INVALID_ROB;
             head <= `INVALID_ROB;
             tail <= `INVALID_ROB;
-            for (integer i = 0; i < `ROB_SIZE; i = i + 1) begin
+            for (i = 0; i < `ROB_SIZE; i = i + 1) begin
                 busy[i] <= `FALSE;
                 ready[i] <= `FALSE;
                 predicted_jump_sign[i] <= `FALSE;
