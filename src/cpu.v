@@ -1,36 +1,6 @@
 // RISCV32I CPU top module
 // port modification allowed for debugging purposes
 
-// run on wsl
-
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/defines.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/Mem/MemCtrl.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/IF/Fetcher.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/IF/Predictor.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/IF/Register.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/IF/ROB.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/ID/Commander.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/EX/LS_EX.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/EX/LS.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/EX/RS_EX.v"
-// `include "/mnt/d/Sam/program/CPU-2022/riscv/src/EX/RS.v"
-
-// use for local verilog compiler
-
-// `include "defines.v"
-
-// `include "riscv\src\cpu.v"
-`include "Mem/MemCtrl.v"
-`include "IF/Fetcher.v"
-`include "IF/Predictor.v"
-`include "IF/Register.v"
-`include "IF/ROB.v"
-`include "ID/Commander.v"
-`include "EX/LS_EX.v"
-`include "EX/LS.v"
-`include "EX/RS_EX.v"
-`include "EX/RS.v"
-
 module cpu(
     input wire clk_in,            // system clock signal
     input wire rst_in,            // reset signal
